@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Thanks for Visiting!</title>
+</head>
+<body>
+  <h2>Thanks for visiting the stall!</h2>
+  <p id="message">Logging your visit...</p>
+
+  <script>
+    // Get the stall_id from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const stallId = urlParams.get('stall_id');
+
+    // Store in localStorage (can later be sent to a server)
+    if (stallId) {
+      let visits = JSON.parse(localStorage.getItem('visits') || '[]');
+      visits.push({ stallId, time: new Date().toLocaleString() });
+      localStorage.setItem('visits', JSON.stringify(visits));
+
+      document.getElementById('message').innerText = `Your visit to ${stallId} has been recorded!`;
+    } else {
+      document.getElementById('message').innerText = 'Invalid QR code (missing stall_id).';
+    }
+  </script>
+</body>
+</html>
